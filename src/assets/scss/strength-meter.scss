@@ -3,41 +3,35 @@
 }
 
 body {
-  background-color: #143F6B;
   margin: 0;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
-.piano {
-  display: flex;
+.strength-meter {
+  position: relative;
+  height: 0.5rem;
+  width: 100%;
+  border: 2px solid #ccc;
+  border-radius: 1rem;
+  margin-top: 5px;
+  overflow: hidden;
 }
 
-.key {
-  height: calc(var(--width) * 4);
-  width: var(--width);
+.strength-meter::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: calc(1% * var(--strength, 0));
+  background-color: var(--meterColor, #ccc);
+  transition: width 200ms, background-color 200ms;
 }
 
-.white {
-  --width: 100px;
-  background-color: white;
-  border: 1px solid #333;
-}
-
-.white.active {
-  background-color: #CCC;
-}
-
-.black {
-  --width: 60px;
-  background-color: black;
-  margin-left: calc(var(--width) / -2);
-  margin-right: calc(var(--width) / -2);
-  z-index: 2;
-}
-
-.black.active {
-  background-color: #333;
+.message {
+  font: small-caption;
+  margin: 3px 0px;
+  font-size: 12px;
+  transition: all 200ms;
 }
