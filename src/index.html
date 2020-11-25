@@ -12,16 +12,34 @@
   <link rel="shortcut icon" href="../../assets/images/favicon.ico" />
   <meta charset="UTF-8" />
   <!-- CSS Bootstrap & Custom -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap" rel="stylesheet" />
   </head>
 
 <body>
-  <form>
+  <pre>
+    <code>
+    configuration :
+    1) supports mutiple instance
+    2) supports custom validation and also builtin validation for passwords.
+    5) configuration : new StrengthMeter('#password', {
+      onchange: (state: any) => {
+        console.log(state)
+      },
+      customValidation: [{validator: '[a-z]',state: 'lowercase',strength: 3},{validator: '[A-Z]',state: 'uppercase',strength: 2}]
+    });
+    6) onchange event support which current state of validation. For ref check strength-meter-config.ts
+    </code>
+    </pre>
+    <div class="container">
+      <div class="row">
+  <form class="col-md-4">
+    <div class="form-inline">
   <label for="password">Password</label>
-  <input type="text" name="password" placeholder="Enter to Check" id="password" />
-  </form>
-
-<div class="view-container"></div>
+  <input type="text" class="form-control ml-2" name="password" placeholder="Enter to Check" id="password" />
+</div>  
+</form>
+</div></div>
 </body>
 
 </html>

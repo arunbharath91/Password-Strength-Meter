@@ -1,6 +1,16 @@
 interface IOptions {
-  onchange?: Function
+  onchange?: Function,
+  customValidation?: ICustomValidator[]
 }
+
+type TStrength = 1 | 2 | 3 | 4 | 5;
+
+interface ICustomValidator {
+  validator: string,
+  state: string,
+  strength: TStrength
+}
+
 const defaultOptions = {
 
 }
@@ -37,29 +47,39 @@ insertAfter(el: HTMLElement, referenceNode: any) {
 
 private validate(password: string) {
   let strength = 0;
-  if(password.match("[a-z]")) {
-  strength += 1;
-  this.state.lowercase = true;
-  }
-  if(password.match("[A-Z]")) {
-  strength += 1;
-  this.state.uppercase = true;
-  }
-  if(password.match("[0-9]")) {
-  strength += 1;
-  this.state.number = true;
-  }
-  if(password.match("[$@$!%*#?&]")) {
-  strength += 1;
-  this.state.special = true;
-  }
-  if(password.length > 5) {
-  strength += 1;
-  this.state.length = true;
-  }
-  if(password.length <= 0) {
-  strength = 0;
-  this.state = {};
+
+  if(this.options.customValidation) {
+    for(let v of this.options.customValidation) {
+      if(password.match(v.validator)) {
+        strength += v.strength;
+        this.state[v.state] = true;
+       }
+    }
+  } else {
+    if(password.match("[a-z]")) {
+      strength += 1;
+      this.state.lowercase = true;
+      }
+      if(password.match("[A-Z]")) {
+      strength += 1;
+      this.state.uppercase = true;
+      }
+      if(password.match("[0-9]")) {
+      strength += 1;
+      this.state.number = true;
+      }
+      if(password.match("[$@$!%*#?&]")) {
+      strength += 1;
+      this.state.special = true;
+      }
+      if(password.length > 5) {
+      strength += 1;
+      this.state.length = true;
+      }
+      if(password.length <= 0) {
+      strength = 0;
+      this.state = {};
+      }
   }
 
 switch(strength) {
